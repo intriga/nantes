@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Models\Post;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
     public function index()
     {
-        return view('posts.index');
+        $posts = Post::orderBy('id', 'desc')->get();
+        return response()->json($posts);
     }
 
     /**

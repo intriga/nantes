@@ -310,16 +310,21 @@ return [
         //     'type' => 'sidebar-menu-search',
         //     'text' => 'search',
         // ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
+        // [
+        //     'text' => 'blog',
+        //     'url' => 'admin/blog',
+        //     'can' => 'manage-blog',
+        // ],
         
         [
             'text' => 'Dashboard',
             'url' => 'home',
             'icon' => 'nav-icon fas fa-tachometer-alt',
+        ],
+        [
+            'text' => 'Posts',
+            'url' => 'posts',
+            'icon' => 'nav-icon fas fa-pen-square',
         ],
         // ['header' => 'account_settings'],
         // [

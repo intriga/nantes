@@ -57,6 +57,18 @@
     <!-- /.content -->
 @stop
 
+@section('footer')
+    <div class="float-right">
+        Version: {{ config('app.version', '1.0.0') }}
+    </div>
+
+    <strong>
+        <a href="{{ config('app.company_url', '#') }}">
+            {{ config('app.company_name', 'My company') }}
+        </a>
+    </strong>
+@stop
+
 @section('css')
     {{-- Add here extra stylesheets --}}
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
