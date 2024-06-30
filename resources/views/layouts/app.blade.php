@@ -29,7 +29,9 @@
 {{-- Rename section content to content_body --}}
 
 @section('content')
-    @yield('content_body')
+    <div id="app">
+        @yield('content_body')
+    </div>
 @stop
 
 {{-- Create a common footer --}}
