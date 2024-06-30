@@ -33,13 +33,13 @@
                                 <a :href="'/post/' + value.slug" type="button" class="btn btn-success">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <!-- <a :href="'/post/' + value.slug + '/edit'" type="button" class="btn btn-warning">
+                                <a :href="'/post/' + value.slug + '/edit'" type="button" class="btn btn-warning">
                                     <i class="fas fa-edit"></i>
-                                </a> -->
-                                <!-- <button type="button" class="btn btn-danger"
+                                </a>
+                                <button type="button" class="btn btn-danger"
                                         @click="deletePost(value.id)">
                                     <i class="fas fa-eraser"></i>
-                                </button> -->
+                                </button>
                             </td>
                         </tr>                
                     </tbody>
@@ -74,16 +74,16 @@
                 });
             },
 
-            // deletePost(id) {
-            //     axios.delete(`http://127.0.0.1:8000/api/posts/${id}/delete`).then(res => {
-            //         //console.log(res.data);
-            //         this.getPosts();
-            //     })
-            //     .catch(function (error) {
-            //         // handle error
-            //         console.log(error);
-            //     })
-            // },
+            deletePost(id) {
+                axios.delete(`/api/posts/${id}/delete`).then(res => {
+                    //console.log(res.data);
+                    this.getPosts();
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+            },
 
             format_date(value) {
                 if (value) {

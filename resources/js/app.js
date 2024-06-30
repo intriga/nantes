@@ -22,10 +22,14 @@ app.component('example-component', ExampleComponent);
 // modules posts
 import ListPost from './posts/ListPost.vue';
 import CreatePost from './posts/CreatePost.vue';
+import ShowPost from './posts/ShowPost.vue';
+import EditPost from './posts/EditPost.vue';
 
 
 app.component('list-post', ListPost);
 app.component('create-post', CreatePost);
+app.component('show-post', ShowPost);
+app.component('edit-post', EditPost);
 
 /**
  * The following block of code may be used to automatically register your
