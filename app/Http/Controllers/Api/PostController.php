@@ -35,7 +35,17 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug');
         $post->content = $request->input('content');
+
+        if ($request->allFiles('image')) {     
+            $fileName = $request->file('image')->hashName();
+            $path = $request->file('image')->storeAs('images', $fileName, 'public');
+            $post["image"] = '/storage/'.$path;
+        }
+        //return response()->json("Uploaded successfully!");
+
+        //dd($request->all());
         $post->save();
+        return redirect('/posts');
     }
 
     /**

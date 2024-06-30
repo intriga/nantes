@@ -8,6 +8,9 @@
                     <span class="mailbox-read-time float-right">{{ format_date(model.post.created_at) }}</span>
                 </h6>
             </div>
+
+            <img :src="model.post.image" class="img-fluid" alt="Responsive image">
+
             <!-- /.mailbox-read-info -->
             <div class="mailbox-read-message">
 
@@ -44,6 +47,7 @@
                     post: {
                         title: '',
                         content: '',
+                        image: '',
                         created_at: '',
                     }
                 }
@@ -70,6 +74,7 @@
                     this.model.post = {
                         title: res.data.title,
                         content: res.data.content,
+                        image: res.data.image,
                         created_at: res.data.created_at,
                     }
                 });

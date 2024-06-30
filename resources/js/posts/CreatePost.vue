@@ -5,7 +5,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form id="quickForm" @submit.prevent="savePost">
+            <form id="quickForm" @submit.prevent="savePost" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
@@ -22,6 +22,11 @@
                             v-model="model.post.slug"
                         />                                                  
                             
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" name="image" class="form-control" ref="fileInput" @change="handleFileChange">
                     </div>
 
                     <div class="form-group">
@@ -58,6 +63,7 @@ export default {
                     title: '',
                     slug: '',
                     content: '',
+                    file:   '',
                 }
             }
         };
@@ -75,23 +81,40 @@ export default {
         this.model.post.slug = slug;
         },
 
-        savePost(){
-            axios.post('/api/post/', this.model.post).then(res => {
-                console.log(res.data);
-                
-                this.model.post = {
-                    title: '',
-                    slug: '',
-                    content: '',
-                }
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
+        handleFileChange(e) {
+            //console.log(e.target.files[0]["name"]);
+            this.model.post.file = e.target.files[0]; // Assuming single file upload
+        },
 
-            
-        }
+        savePost() {
+            const formData = new FormData(); // Create a FormData object
+            formData.append('title', this.model.post.title);
+            formData.append('slug', this.model.post.slug);
+            formData.append('content', this.model.post.content);
+            formData.append('image', this.model.post.file); // Assuming 'file' is a file input
+
+            axios.post('/api/post', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then(res => {
+                    console.log(res.data);
+
+                    this.model.post = { // Reset the form data
+                        title: '',
+                        slug: '',
+                        content: '',
+                        file: '',
+                    };
+                    
+                    window.location.href = '/posts';
+
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Handle errors
+                });
+            },
     }
 };
 </script>
