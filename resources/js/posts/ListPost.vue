@@ -76,7 +76,7 @@
 
             deletePost(id) {
                 axios.delete(`/api/posts/${id}/delete`).then(res => {
-                    //console.log(res.data);
+                    console.log(res.data);
                     this.getPosts();
                 })
                 .catch(function (error) {

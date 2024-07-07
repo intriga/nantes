@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
@@ -75,7 +77,27 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug');
         $post->content = $request->input('content');
+
+        $old_image = $post->old_image = $request->input('old_image');
+
+        $image = $request->file('image'); // Access uploaded file
+        //dd($request->all());
+        if ($image) {
+
+            // first delete old image
+            unlink(storage_path('app/public/images/' . substr($old_image, 15) ));            
+            $post->delete();
+
+            $fileName = $image->hashName();
+            $path = $image->storeAs('images', $fileName, 'public');
+            $post->image = '/storage/' . $path;
+        } 
+    
         $post->save();
+    
+        return back()->with('message', 'Post updated successfully!');
+
+        
     }
 
     /**
@@ -84,6 +106,12 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = Post::find($id);
-        $post->delete();
+        if ($post->image) {
+            $image = $post->image;
+            unlink(storage_path('app/public/images' . substr($image, 15) ));            
+            $post->delete();
+        }else{
+            $post->delete();
+        }
     }
 }

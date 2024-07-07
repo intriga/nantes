@@ -7,7 +7,7 @@
             </div>
             <!-- /.mailbox-read-info -->
             <!-- form start -->
-            <form id="quickForm" @submit.prevent="savePost" enctype="multipart/form-data">
+            <form id="quickForm" @submit.prevent="savePost">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
@@ -28,10 +28,6 @@
 
                     <div class="form-group">
                         <label>Image</label>
-                        <!-- <input 
-                            type="text" name="old_image" class="form-control" id="old_image"
-                            v-model="model.post.old_image"
-                        /> -->
                         <input type="file" name="image" class="form-control" ref="fileInput" @change="handleFileChange">
                     </div>
 
@@ -84,8 +80,6 @@
                         title: '',
                         slug: '',
                         content: '',
-                        image: '',
-                        //old_image: '',
                     }
                 }
             }
@@ -117,51 +111,32 @@
 
                 axios.get(`/api/post/${slug}/edit`).then(res => {
                     this.post = res.data;
-                    // console.log(this.post);
+                    //console.log(this.post);
 
                     this.model.post = {
                         id: res.data.id,
                         title: res.data.title,
                         slug: res.data.slug,
                         content: res.data.content,
-                        old_image: res.data.image,
-                        image: '',
                     }
                 });
-            },   
-            
-            handleFileChange(e) {
-                const file = e.target.files[0];
-                this.model.post.image = file;
-            },
+            },            
             
 
-            savePost() {
-                const formData = new FormData(); // Use FormData for multipart file upload
-                formData.append('id', this.model.post.id);
-                formData.append('title', this.model.post.title);
-                formData.append('slug', this.model.post.slug);
-                formData.append('content', this.model.post.content);
-                formData.append('old_image', this.model.post.old_image);
-                // Append the image file if it exists
-                if (this.model.post.image) {
-                    formData.append('image', this.model.post.image);
-                }
-
-                const headers = {
-                    'Content-Type': 'multipart/form-data',
-                };
-
-                axios.post('/api/post/' + this.model.post.id + '/edit', formData, { headers })
-                    .then((res) => {
+            savePost(){
+                axios.put('/api/post/'+this.model.post.id+'/edit', 
+                            this.model.post).then(res => {
                     //console.log(res.data);
-                    window.location = '/posts';
-                    })
-                    .catch((error) => {
-                    console.error(error);
-                    // Handle errors appropriately (e.g., display error messages to the user)
-                    });
-            },
+                    
+                    window.location = '/posts'
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+
+                
+            }
 
         }
     }
