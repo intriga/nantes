@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
+            // relations
+            $table->foreign('category_id')->references('id')->on('categories')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->unsignedBigInteger('category_id')->nullable()->default(NULL);  // Nullable and default to NULL
+
             $table->text('title', 100);
             $table->string('slug', 191)->unique();
             $table->text('content');
             $table->text('image')->nullable();
             $table->text('old_image')->nullable();
+
+            
 
             $table->timestamps();
         });
