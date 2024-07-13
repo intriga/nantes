@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +23,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 // admin
+
+// module posts
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::get('/post/create', [PostController::class,'create']);
 Route::get('/post/{slug}', [PostController::class, 'show']);
 Route::get('/post/{slug}/edit', [PostController::class, 'edit']);
+
+
+// module category
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/category/create', [CategoryController::class,'create']);
+Route::get('/category/{slug}', [CategoryController::class, 'show']);
+Route::get('/category/{slug}/edit', [CategoryController::class, 'edit']);

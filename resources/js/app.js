@@ -25,11 +25,22 @@ import CreatePost from './posts/CreatePost.vue';
 import ShowPost from './posts/ShowPost.vue';
 import EditPost from './posts/EditPost.vue';
 
-
 app.component('list-post', ListPost);
 app.component('create-post', CreatePost);
 app.component('show-post', ShowPost);
 app.component('edit-post', EditPost);
+
+
+// modules categories
+import ListCategories from './categories/ListCategories.vue';
+import CreateCategory from './categories/CreateCategory.vue';
+import ShowCategory from './categories/ShowCategory.vue';
+import EditCategory from './categories/EditCategory.vue';
+
+app.component('list-categories', ListCategories);
+app.component('create-category', CreateCategory);
+app.component('show-category', ShowCategory);
+app.component('edit-category', EditCategory);
 
 /**
  * The following block of code may be used to automatically register your

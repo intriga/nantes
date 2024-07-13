@@ -30,6 +30,25 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Minimal</label>
+                        <select v-model="model.categories.id" class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                            <option value="" disabled>Select a category</option>
+                            <option v-for="value in categories" :key="value.id" :value="value.id">{{ value.title }}</option>
+                        </select>
+
+                        <!-- Display additional content based on selection -->
+                        <div v-if="model.categories.id">
+                        <!-- Content to show when a category is selected -->
+                        Selected category ID: {{ model.categories.id }}
+                        </div>
+                        <div v-else>
+                        <!-- Content to show when no category is selected -->
+                        Please select a category.
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
                         <label>Textarea</label>
                         <textarea 
                             class="form-control" id="content" name="content"  rows="3" placeholder="Enter ..."
@@ -64,12 +83,27 @@ export default {
                     slug: '',
                     content: '',
                     file:   '',
-                }
-            }
+                },
+                categories: [{
+                    id: '',
+                    title: '',
+                }]
+            }            
         };
+    },
+
+    created(){
+        this.getCategory();
     },
        
     methods: {
+
+        getCategory() {
+            axios.get('/api/categories').then(res => {
+                this.categories = res.data;
+                console.log(this.categories);
+            });
+        },
 
         generateSlug() {
             const slug = this.model.post.title
@@ -87,11 +121,17 @@ export default {
         },
 
         savePost() {
+
+            const selectedCategory = this.model.categories.id;
+            console.log(selectedCategory);
+            //const categoryIdToSend = selectedCategory ? selectedCategory.id : null;
+
             const formData = new FormData(); // Create a FormData object
             formData.append('title', this.model.post.title);
             formData.append('slug', this.model.post.slug);
             formData.append('content', this.model.post.content);
             formData.append('image', this.model.post.file); // Assuming 'file' is a file input
+            formData.append('category_id', selectedCategory); // Use the extracted category ID
 
             axios.post('/api/post', formData, {
                 headers: {
@@ -99,14 +139,16 @@ export default {
                     },
                 })
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
 
                     this.model.post = { // Reset the form data
                         title: '',
                         slug: '',
                         content: '',
                         file: '',
+                        category_id: '',
                     };
+                    //this.model.categories = {};
                     
                     window.location.href = '/posts';
 

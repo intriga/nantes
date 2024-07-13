@@ -3,23 +3,12 @@
         <!-- /.card-header -->
         <div class="card-body p-0">
             <div class="mailbox-read-info">
-                <h5>{{ model.post.title }}</h5>
+                <h5>{{ model.category.title }}</h5>
                 <h6>
-                    <span class="mailbox-read-time float-right">{{ format_date(model.post.created_at) }}</span>
+                    <span class="mailbox-read-time float-right">{{ format_date(model.category.created_at) }}</span>
                 </h6>
             </div>
-
-            <img :src="model.post.image" class="img-fluid" alt="Responsive image">
-
-            <p>{{ model.post.category_title }}</p>
-
-            <!-- /.mailbox-read-info -->
-            <div class="mailbox-read-message">
-
-                <p>{{ model.post.content }}</p>
-
-            </div>
-            <!-- /.mailbox-read-message -->
+            
         </div>
         <!-- /.card-body -->
 
@@ -46,12 +35,9 @@
             return {
                 capturedSlug: null,
                 model: {
-                    post: {
+                    category: {
                         title: '',
-                        content: '',
-                        image: '',
                         created_at: '',
-                        category_title: '',
                     }
                 }
             }
@@ -70,16 +56,13 @@
                 const slug = urlParts[urlParts.length - 1];
                 //console.log(slug);
 
-                axios.get(`/api/post/${slug}`).then(res => {
-                    this.post = res.data;
-                    console.log(this.post);
+                axios.get(`/api/category/${slug}`).then(res => {
+                    this.category = res.data;
+                    console.log(this.category);
 
-                    this.model.post = {
+                    this.model.category = {
                         title: res.data.title,
-                        content: res.data.content,
-                        image: res.data.image,
                         created_at: res.data.created_at,
-                        category_title: res.data.category.title,
                     }
                 });
             },            

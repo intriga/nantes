@@ -37,6 +37,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug');
         $post->content = $request->input('content');
+        $post->category_id = $request->input('category_id');
 
         if ($request->allFiles('image')) {     
             $fileName = $request->file('image')->hashName();
@@ -55,7 +56,9 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
-        $post = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)
+            ->with('category') // Eager load the category relationship
+            ->first();
         return response()->json($post);
     }
 
@@ -64,7 +67,9 @@ class PostController extends Controller
      */
     public function edit(string $slug)
     {
-        $post = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)
+        ->with('category') // Eager load the category relationship
+        ->first();
         return response()->json($post);
     }
 
@@ -78,10 +83,12 @@ class PostController extends Controller
         $post->slug = $request->input('slug');
         $post->content = $request->input('content');
 
+        $post->category_id = $request->input('category_id');
+
         $old_image = $post->old_image = $request->input('old_image');
 
         $image = $request->file('image'); // Access uploaded file
-        //dd($request->all());
+        // dd($request->all());
         if ($image) {
 
             // first delete old image

@@ -323,8 +323,17 @@ return [
         ],
         [
             'text' => 'Posts',
-            'url' => 'posts',
             'icon' => 'nav-icon fas fa-pen-square',
+            'submenu' => [
+                [
+                    'text' => 'Posts',
+                    'url' => 'posts',
+                ],                
+                [
+                    'text' => 'Category',
+                    'url' => 'categories',
+                ],                
+            ],
         ],
         // ['header' => 'account_settings'],
         // [

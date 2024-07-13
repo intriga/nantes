@@ -36,6 +36,13 @@
                     </div>
 
                     <div class="form-group">
+                        <span v-if="model.post.category_title">{{ model.post.category_title }}</span>
+                        <select v-model="model.categories.id" class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                            <option v-for="value in categories" :key="value.id" :value="value.id">{{ value.title }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label>Textarea</label>
                         <textarea 
                             class="form-control" id="content" name="content"  rows="3" placeholder="Enter ..."
@@ -86,13 +93,23 @@
                         content: '',
                         image: '',
                         //old_image: '',
-                    }
+                        category_id: '',
+                        category_title: '',
+                    },
+                    categories: [{
+                        id: '',
+                        title: '',
+                    }]
                 }
             }
         },
 
+        beforeMount(){
+            this.getCategory();
+        },
+
         mounted() {
-            this.getPost();
+            this.getPost();            
         },
 
         methods: {
@@ -105,6 +122,13 @@
                 .replace(/[^\w-]+/g, ''); // Remove non-alphanumeric characters
 
             this.model.post.slug = slug;
+            },
+
+            getCategory() {
+                axios.get('/api/categories').then(res => {
+                    this.categories = res.data;
+                    // console.log(this.categories);
+                });
             },
             
             getPost() {
@@ -126,6 +150,8 @@
                         content: res.data.content,
                         old_image: res.data.image,
                         image: '',
+                        // category_id: res.data.category.id,
+                        category_title: res.data.category.title,
                     }
                 });
             },   
@@ -137,24 +163,29 @@
             
 
             savePost() {
+                const selectedCategory = this.model.categories.id;
+                console.log(selectedCategory);
+
                 const formData = new FormData(); // Use FormData for multipart file upload
                 formData.append('id', this.model.post.id);
                 formData.append('title', this.model.post.title);
                 formData.append('slug', this.model.post.slug);
                 formData.append('content', this.model.post.content);
                 formData.append('old_image', this.model.post.old_image);
+                formData.append('category_id', selectedCategory); // Use the extracted category ID
+
                 // Append the image file if it exists
                 if (this.model.post.image) {
                     formData.append('image', this.model.post.image);
                 }
-
+                
                 const headers = {
                     'Content-Type': 'multipart/form-data',
                 };
 
                 axios.post('/api/post/' + this.model.post.id + '/edit', formData, { headers })
                     .then((res) => {
-                    //console.log(res.data);
+                    // console.log(res.data);
                     window.location = '/posts';
                     })
                     .catch((error) => {
