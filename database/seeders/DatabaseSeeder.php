@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategorySeeder::class);
-        $this->call(PostSeeder::class);
+        // $this->call(CategorySeeder::class);
+        // $this->call(PostSeeder::class);
 
         User::create([
             'name' => 'Intriga',

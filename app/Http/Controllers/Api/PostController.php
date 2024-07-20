@@ -42,7 +42,7 @@ class PostController extends Controller
         if ($request->allFiles('image')) {     
             $fileName = $request->file('image')->hashName();
             $path = $request->file('image')->storeAs('images', $fileName, 'public');
-            $post["image"] = '/storage/'.$path;
+            $post["image"] = '/'.$path;
         }
         //return response()->json("Uploaded successfully!");
 
@@ -89,16 +89,20 @@ class PostController extends Controller
 
         $image = $request->file('image'); // Access uploaded file
         // dd($request->all());
-        if ($image) {
-
-            // first delete old image
-            unlink(storage_path('app/public/images/' . substr($old_image, 15) ));            
-            $post->delete();
-
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+    
+            // Delete the old image if it exists
+            if (File::exists(public_path($old_image))) {
+                File::delete(public_path($old_image));
+            }
+    
             $fileName = $image->hashName();
-            $path = $image->storeAs('images', $fileName, 'public');
-            $post->image = '/storage/' . $path;
-        } 
+            $imagePath = '/images/' . $fileName;
+            $image->move(public_path('images'), $fileName);
+    
+            $post->image = $imagePath;
+        }
     
         $post->save();
     
@@ -114,10 +118,14 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if ($post->image) {
-            $image = $post->image;
-            unlink(storage_path('app/public/images' . substr($image, 15) ));            
+            $imagePath = public_path($post->image); // Get the absolute path to the image
+    
+            if (File::exists($imagePath)) {
+                File::delete($imagePath); // Delete the file using Laravel's File facade
+            }
+    
             $post->delete();
-        }else{
+        } else {
             $post->delete();
         }
     }
