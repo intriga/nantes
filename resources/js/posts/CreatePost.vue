@@ -50,11 +50,14 @@
 
                     <div class="form-group">
                         <label>Textarea</label>
-                        <textarea 
+                        <!-- <textarea 
                             class="form-control" id="content" name="content"  rows="3" placeholder="Enter ..."
                             v-model="model.post.content"
                         >
-                        </textarea>
+                        </textarea> -->
+                        <div id="appckeditor">
+                            <ckeditor :editor="editor" v-model="model.post.content" :config="editorConfig"></ckeditor>
+                        </div>
                     </div>
 
 
@@ -69,12 +72,46 @@
         </div>
 </template>
 
+<style>
+#appckeditor {
+    color: black;
+}
+.ck-editor__editable {
+    min-height: 300px; /* Adjust the height as needed */
+}
+</style>
+
 <script>
 
 import slugify from 'slugify';
 import axios from 'axios';
 
+import CKEditor from '@ckeditor/ckeditor5-vue';
+  import {
+    ClassicEditor,
+    Alignment,
+    Bold,
+    Essentials,
+    Heading,
+    Indent,
+    IndentBlock,
+    Italic,
+    Link,
+    List,
+    MediaEmbed,
+    Paragraph,
+    Table,
+    Undo
+  } from 'ckeditor5';
+
+  import 'ckeditor5/ckeditor5.css';
+
+
 export default {
+    name: 'appckeditor',
+    components: {
+      ckeditor: CKEditor.component
+    },
     data() {
         return {       
             model: {
@@ -88,6 +125,31 @@ export default {
                     id: '',
                     title: '',
                 }]
+            },
+            editor: ClassicEditor,
+            editorData: '<h1>Hello from CKEditor 5!</h1>',
+            editorConfig: {
+                toolbar: [
+                    'undo', 'redo', '|',
+                    'heading', '|', 'bold', 'italic', '|',
+                    'link', 'insertTable', 'mediaEmbed', '|',
+                    'bulletedList', 'numberedList', 'indent', 'outdent', 'alignment'
+                ],
+                plugins: [
+                    Alignment,
+                    Bold,
+                    Essentials,
+                    Heading,
+                    Indent,
+                    IndentBlock,
+                    Italic,
+                    Link,
+                    List,
+                    MediaEmbed,
+                    Paragraph,
+                    Table,
+                    Undo
+                ],
             }            
         };
     },

@@ -19,7 +19,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section class="content pb-5">
 
     <!-- Default box -->
     <create-post></create-post>

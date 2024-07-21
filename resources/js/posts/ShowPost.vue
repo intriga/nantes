@@ -16,7 +16,7 @@
             <!-- /.mailbox-read-info -->
             <div class="mailbox-read-message">
 
-                <p>{{ model.post.content }}</p>
+                <p v-html="model.post.content"></p>
 
             </div>
             <!-- /.mailbox-read-message -->

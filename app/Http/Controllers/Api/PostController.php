@@ -18,6 +18,9 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('id', 'desc')->get();
         return response()->json($posts);
+
+        // $posts = Post::paginate(15);
+        // return response()->json($posts);
     }
 
     /**
