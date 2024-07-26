@@ -16,11 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->with('category')->get();
-        return response()->json($posts);
-
-        // $posts = Post::paginate(5);
+        // $posts = Post::orderBy('id', 'desc')->with('category')->get();
         // return response()->json($posts);
+
+        $posts = Post::with('category')->orderBy('id', 'desc')->paginate(5);
+        return response()->json($posts);
     }
 
     /**

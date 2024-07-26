@@ -5,6 +5,7 @@
  */
 
 import './bootstrap';
+import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import { createApp } from 'vue';
 
 /**
@@ -14,6 +15,7 @@ import { createApp } from 'vue';
  */
 
 const app = createApp({});
+app.component('Bootstrap4Pagination', Bootstrap4Pagination);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
