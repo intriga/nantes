@@ -44,6 +44,9 @@
                         </tr>                
                     </tbody>
                 </table>
+
+                
+
             </div>
             <!-- /.card-body -->
         </div>
@@ -53,6 +56,7 @@
 <script>
     import axios from 'axios';
     import moment from 'moment';
+
 
     export default {
 
@@ -69,8 +73,8 @@
         methods: {
             getPosts() {
                 axios.get('/api/posts').then(res => {
-                    this.posts = res.data;
-                    //console.log(this.posts);
+                    this.posts = res.data.data;
+                    // console.log(this.posts);
                 });
             },
 
