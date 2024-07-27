@@ -335,6 +335,12 @@ return [
                 ],                
             ],
         ],
+        ['header' => 'account_settings'],
+        [
+            'text' => 'Users',
+            'url' => 'users',
+            'icon' => 'nav-icon fas fa-users',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

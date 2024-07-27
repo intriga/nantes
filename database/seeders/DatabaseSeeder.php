@@ -13,13 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call(CategorySeeder::class);
-        // $this->call(PostSeeder::class);
-
-        User::create([
-            'name' => 'Intriga',
-            'email' => 'admin@demo.com',
-            'password' => bcrypt('123456'),
-        ]);
+        $this->call(CategorySeeder::class);
+        $this->call(PostSeeder::class);
+        $this->call(UserSeeder::class);
+        
     }
 }

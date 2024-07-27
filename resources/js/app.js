@@ -44,6 +44,16 @@ app.component('create-category', CreateCategory);
 app.component('show-category', ShowCategory);
 app.component('edit-category', EditCategory);
 
+
+// modules users
+import ListUsers from './users/ListUsers.vue';
+import CreateUser from './users/CreateUser.vue';
+
+
+app.component('list-users', ListUsers);
+app.component('create-user', CreateUser);
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

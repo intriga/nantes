@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,3 +37,8 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/category/create', [CategoryController::class,'create']);
 Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/category/{slug}/edit', [CategoryController::class, 'edit']);
+
+
+// module user
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/user/create', [UserController::class,'create']);

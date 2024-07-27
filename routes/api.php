@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,3 +27,7 @@ Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/category/{slug}/edit', [CategoryController::class, 'edit']);
 Route::put('/category/{id}/edit', [CategoryController::class, 'update']);
 Route::delete('/category/{id}/delete', [CategoryController::class, 'destroy']);
+
+// module users
+Route::get('/users', [UserController::class,'index']);
+Route::post('/user', [UserController::class,'store']);
